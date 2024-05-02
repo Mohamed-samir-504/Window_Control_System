@@ -399,6 +399,11 @@
               <FileType>1</FileType>
               <FilePath>.\test.c</FilePath>
             </File>
+            <File>
+              <FileName>test2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\test2.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
