@@ -8,7 +8,7 @@ int main(void)
 	
 	while(1)
 	{
-	printstring("looooooooooooooool\n");
+	printstring("gggggg\n");
 	Delay(100);
 	}
 }
