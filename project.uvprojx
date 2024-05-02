@@ -394,16 +394,6 @@
               <FileType>5</FileType>
               <FilePath>.\tm4c123gh6pm.h</FilePath>
             </File>
-            <File>
-              <FileName>test.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\test.c</FilePath>
-            </File>
-            <File>
-              <FileName>test2.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\test2.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>

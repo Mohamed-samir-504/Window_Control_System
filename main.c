@@ -6,7 +6,6 @@ int main(void)
 {
 	UART_Init();
 	
-	//noob ggggggggggggksdfkjasdnjkngasg
 	while(1)
 	{
 	printstring("looooooooooooooool\n");
