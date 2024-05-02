@@ -1,6 +1,4 @@
 project.uvguix.Mark
-project.uvoptx
-project.uvprojx
 Listings/project.map
 Objects/freertos_evr.d
 Objects/freertos_evr.o
@@ -28,3 +26,7 @@ Objects/timers.o
 Objects/uart.d
 Objects/uart.o
 RTE/_Target_1/RTE_Components.h
+project.uvguix.Mark
+Objects/project_Target 1.dep
+Objects/project.build_log.htm
+Objects/project.htm

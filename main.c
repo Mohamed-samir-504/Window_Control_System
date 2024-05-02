@@ -6,7 +6,7 @@ int main(void)
 {
 	UART_Init();
 	
-	//3.6 was here
+	//noob
 	while(1)
 	{
 	printstring("lol\n");
