@@ -9,7 +9,7 @@ int main(void)
 	//noob ggggggggggggksdfkjasdnjkngasg
 	while(1)
 	{
-	printstring("lol\n");
+	printstring("looooooooooooooool\n");
 	Delay(100);
 	}
 }
