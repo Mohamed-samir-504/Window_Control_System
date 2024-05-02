@@ -13,6 +13,7 @@ void UART0_Transmitter(unsigned char data)
     while((UART0->FR & (1<<5)) != 0); /* wait until Tx buffer not full */
     UART0->DR = data;                  /* before giving it another byte */
 }
+// tesstttt
 
 void printstring(char *str)
 {

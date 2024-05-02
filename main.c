@@ -6,12 +6,11 @@ int main(void)
 {
 	UART_Init();
 	
-	//noob
+	//noob ggggggggggggksdfkjasdnjkngasg
 	while(1)
 	{
 	printstring("lol\n");
 	Delay(100);
 	}
-
 }
 
