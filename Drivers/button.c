@@ -7,7 +7,7 @@
 	@parameters
 	GPIOx : must be a value from GPIOA -> GPIOF.
 	PIN : must be from 0 to 7 or withdraw ASAP.
-	PUR_EN : is this is set to 0 then only pull down resistor is enabled, if this is set to 1 then only pull up resistor is enabled.
+	PUR_EN : this is set to 0 then only pull down resistor is enabled, if this is set to 1 then only pull up resistor is enabled.
 	
 	@note
 	There are some GPIO pins that has special considerations (need CR and unlocking w bta3 fa fakes) at page 671 in DATA SHEET (PA[5:0], PB[3:2], PC[3:0],PD[7], PF[0]).
