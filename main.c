@@ -25,7 +25,7 @@ xQueueHandle xQueue;
 int main( void )
 
 {
-	UART_Init();
+	  UART_Init();
     /* The queue is created to hold a maximum of 5 long values. */
     xQueue = xQueueCreate( 5, sizeof( long ) );
 
