@@ -8,19 +8,26 @@ char UART0_Receiver(void)
     return (unsigned char) data; 
 }
 
-void UART0_Transmitter(unsigned char data)  
+void UART0_Transmitter(unsigned char data)
 {
     while((UART0->FR & (1<<5)) != 0); /* wait until Tx buffer not full */
     UART0->DR = data;                  /* before giving it another byte */
 }
-// tesstttt
 
-void printstring(char *str)
+void vPrintString(char *str)
 {
-  while(*str)
-	{
-		UART0_Transmitter(*(str++));
-	}
+  while(*str) UART0_Transmitter(*(str++));
+	
+	UART0_Transmitter('\n');
+}
+
+
+char* dec(uint32_t x, char *s)
+{
+    *--s = 0;
+    if (!x) *--s = '0';
+    for (; x; x/=10) *--s = '0' + x%10;
+    return s;
 }
 
 void Delay(unsigned long counter)
@@ -29,6 +36,22 @@ void Delay(unsigned long counter)
 	
 	for(i=0; i< counter; i++);
 }
+
+void vPrintStringAndNumber(char *str, uint32_t num)
+{
+	char temp[10];
+	while(*str) UART0_Transmitter(*(str++));
+	
+	char* res = dec(num,&temp[9]);
+	
+	while(*res) UART0_Transmitter(*(res++));
+	
+	UART0_Transmitter('\n');
+}
+
+
+
+
 void UART_Init()
 {
 	  SYSCTL->RCGCUART |= 0x1;  /* enable clock to UART0 */

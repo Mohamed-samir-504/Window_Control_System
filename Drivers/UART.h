@@ -1,5 +1,5 @@
-void Delay(unsigned long counter);
-char UART0_Receiver(void);
-void UART0_Transmitter(unsigned char data);
-void printstring(char *str);
+#include "TM4C123GH6PM.h"
+
+void vPrintString(char *str);
+void vPrintStringAndNumber(char *str, uint32_t num);
 void UART_Init();
