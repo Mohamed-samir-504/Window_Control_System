@@ -414,6 +414,16 @@
               <FileType>1</FileType>
               <FilePath>.\Drivers\button.c</FilePath>
             </File>
+            <File>
+              <FileName>Motor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Drivers\Motor.c</FilePath>
+            </File>
+            <File>
+              <FileName>Motor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Drivers\Motor.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
