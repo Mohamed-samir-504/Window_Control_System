@@ -1,4 +1,4 @@
-# Power Window Control System using Tiva C and FreeRTOS
+# Power Window Control System using FreeRTOS on Tiva C
 
 This project implements a Power Window Control System using Tiva C microcontroller running FreeRTOS. The system includes features such as manual open/close, one-touch auto open/close, window lock, and jam protection. It utilizes top and bottom limit switches, a DC motor, push buttons for operation, and an ON/OFF switch for window lock.
 
