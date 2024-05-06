@@ -1,6 +1,8 @@
 #include "button.h"
 
 
+
+
 /*
 	set up a GPIO pin to be used as an input button.
 	
@@ -28,16 +30,21 @@ void set_up_button(GPIOA_Type* GPIOx, uint8_t PIN, uint8_t PUR_EN)
 	
 	
 	if(PUR_EN){
-	 GPIOx->PDR |= ~(1<<PIN); 					// Disable Pull down resistor for PIN.
+	 GPIOx->PDR &= ~(1<<PIN); 					// Disable Pull down resistor for PIN.
    GPIOx->PUR |=  (1<<PIN);           // Enable Pull Up resistor for PIN.
 	}
 	else
 	{
-	 GPIOx->PUR |= ~(1<<PIN); 					// Disable Pull up resistor for PIN.
+	 GPIOx->PUR &= ~(1<<PIN); 					// Disable Pull up resistor for PIN.
    GPIOx->PDR |=  (1<<PIN);           // Enable Pull down resistor for PIN.
 	}
 	
-   GPIOx->DIR |= ~(1<<PIN);           // set PIN as an input (button). 
+   GPIOx->DIR &= ~(1<<PIN);           // set PIN as an input (button). 
    GPIOx->DEN |=  (1<<PIN);           // digital enable GPIO pin.
 }
+
+
+
+
+
 
