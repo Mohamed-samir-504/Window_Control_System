@@ -2,7 +2,6 @@
 
 
 
-
 /*
 	set up a GPIO pin to be used as an input button.
 	
@@ -41,6 +40,54 @@ void set_up_button(GPIOA_Type* GPIOx, uint8_t PIN, uint8_t PUR_EN)
 	
    GPIOx->DIR &= ~(1<<PIN);           // set PIN as an input (button). 
    GPIOx->DEN |=  (1<<PIN);           // digital enable GPIO pin.
+}
+
+
+
+void set_up_button_interrupt(GPIOA_Type* GPIOx, uint8_t PIN, uint8_t priority)
+{
+	if(priority>7 || PIN>7) return;
+		
+	if (GPIOx == GPIOA) 
+	{
+		NVIC->IP[0] = priority << 5;
+		NVIC->ISER[0] |= 1<< GPIOA_IRQn;
+	}
+	
+	else if (GPIOx == GPIOB)
+	{
+		NVIC->IP[0] = priority << 13;
+		NVIC->ISER[0] |= 1<< GPIOB_IRQn;
+	}
+	else if (GPIOx == GPIOC)
+	{
+		NVIC->IP[0] = priority << 21;
+		NVIC->ISER[0] |= 1<< GPIOC_IRQn;
+	}
+	else if (GPIOx == GPIOD)
+	{
+		NVIC->IP[0] = priority << 29;
+		NVIC->ISER[0] |= 1<< GPIOD_IRQn;
+	}
+	else if (GPIOx == GPIOE)
+	{
+		NVIC->IP[1] = priority << 5;
+		NVIC->ISER[0] |= 1<< GPIOE_IRQn;
+	}
+	else if (GPIOx == GPIOF) 
+	{
+		NVIC->IP[7] = priority << 21;
+		NVIC->ISER[0] |= 1<< GPIOF_IRQn;
+	}
+	else return;
+	
+	
+	GPIOx->IS  &= ~(1<<PIN);
+	GPIOx->IBE &= ~(1<<PIN);
+	GPIOx->IEV |=  (1<<PIN);
+	GPIOx->ICR |=  (1<<PIN);
+	GPIOx->IM  |=  (1<<PIN);
+
 }
 
 
