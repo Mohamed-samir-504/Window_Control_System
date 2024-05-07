@@ -10,27 +10,27 @@
 #include "semphr.h"
 
 //will be unblocked after jam interrupt
-void Jam(void* pvParameters){
+void vJamHandler(void* pvParameters){
 
 }
 
 //will be unblocked after lock interrupt
-void Lock(void* pvParameters){
+void vLockHandler(void* pvParameters){
 
 }
 
 //will poll on driver buttons
-void Driver(void* pvParameters){
+void vDriverHandler(void* pvParameters){
 
 }
 
 //will poll on passenger buttons
-void Passenger(void* pvParameters){
+void vPassengerHandler(void* pvParameters){
 
 }
 
 //will check for the queue shared between functions and take action based on value
-void MotorAction(void* pvParameters){
+void vMotorAction(void* pvParameters){
 
 }
 
@@ -39,25 +39,26 @@ void MotorAction(void* pvParameters){
 
 int main( void )
 {
-	INIT_MANUAL_OPEN_BUTTON();
-	INIT_MANUAL_CLOSE_BUTTON();
-	INIT_LOCK_SW();
-	INIT_JAM_BUTTON();
+	INIT_BUTTONS();
+	UART_Init();
 	while(1);
 }
 
 
 void GPIOE_Handler(){
-
+	volatile int x = 3;
 	// if jam button caused the interrupt
-	if (READ_JAM_BUTTON()){
+	if (GPIOE->RIS & 0x4){
 		//TO DO
 		//give jam semaphore to unblock jam task
+		x =4;
 	}
 
 	//if lock button caused the interrupt
-	else if (READ_LOCK_SW()){
+	else if (GPIOE->RIS & 0x2){
 		//TO DO
 		//give lock semaphore to unblock lock task
+		x=4;
 	}
+	GPIOE_CLEAR_INTERRUPTS();
 }

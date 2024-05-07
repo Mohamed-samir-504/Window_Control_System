@@ -25,6 +25,13 @@ void set_up_button_interrupt(GPIOA_Type* GPIOx, uint8_t PIN, uint8_t priority);
 #define INIT_JAM_BUTTON()   						set_up_button(GPIOE,2,0);\
 																				set_up_button_interrupt(GPIOE,2,3)
 
+#define INIT_BUTTONS() 									INIT_PASSENGER_OPEN_BUTTON();\
+																				INIT_PASSENGER_CLOSE_BUTTON();\
+																				INIT_DRIVER_OPEN_BUTTON();\
+																				INIT_DRIVER_CLOSE_BUTTON();\
+																				INIT_LOCK_SW();\
+																				INIT_JAM_BUTTON();
+
 
 #define GPIOA_CLEAR_INTERRUPTS()      GPIOA->ICR |= GPIOA->RIS;
 #define GPIOB_CLEAR_INTERRUPTS()      GPIOB->ICR |= GPIOB->RIS;
