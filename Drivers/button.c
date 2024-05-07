@@ -50,33 +50,33 @@ void set_up_button_interrupt(GPIOA_Type* GPIOx, uint8_t PIN, uint8_t priority)
 		
 	if (GPIOx == GPIOA) 
 	{
-		NVIC->IP[0] = priority << 5;
+		NVIC->IPR[0] = priority << 5;
 		NVIC->ISER[0] |= 1<< GPIOA_IRQn;
 	}
 	
 	else if (GPIOx == GPIOB)
 	{
-		NVIC->IP[0] = priority << 13;
+		NVIC->IPR[0] = priority << 13;
 		NVIC->ISER[0] |= 1<< GPIOB_IRQn;
 	}
 	else if (GPIOx == GPIOC)
 	{
-		NVIC->IP[0] = priority << 21;
+		NVIC->IPR[0] = priority << 21;
 		NVIC->ISER[0] |= 1<< GPIOC_IRQn;
 	}
 	else if (GPIOx == GPIOD)
 	{
-		NVIC->IP[0] = priority << 29;
+		NVIC->IPR[0] = priority << 29;
 		NVIC->ISER[0] |= 1<< GPIOD_IRQn;
 	}
 	else if (GPIOx == GPIOE)
 	{
-		NVIC->IP[1] = priority << 5;
+		NVIC->IPR[1] = priority << 5;
 		NVIC->ISER[0] |= 1<< GPIOE_IRQn;
 	}
 	else if (GPIOx == GPIOF) 
 	{
-		NVIC->IP[7] = priority << 21;
+		NVIC->IPR[7] = priority << 21;
 		NVIC->ISER[0] |= 1<< GPIOF_IRQn;
 	}
 	else return;

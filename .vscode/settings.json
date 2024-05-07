@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "button.h": "c",
+        "uart.h": "c",
+        "stdlib.h": "c"
+    },
+    "C_Cpp.errorSquiggles": "disabled"
+}
