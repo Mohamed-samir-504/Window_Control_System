@@ -9,10 +9,7 @@ project.uvguix.Mark
 project.uvguix.midot
 Objects/project.axf
 Objects/project.lnp
-.vscode/c_cpp_properties.json
-.vscode/keil-assistant.log
-.vscode/uv4.log
-.vscode/uv4.log.lock
+.vscode/*
 Objects/project_Target 1.dep
 Objects/project.lnp
 EventRecorderStub.scvd

@@ -10,7 +10,7 @@ char UART0_Receiver(void)
 
 void UART0_Transmitter(unsigned char data)
 {
-    while((UART0->FR & (1<<5)) != 0); /* wait until Tx buffer not full */
+    while((UART0->FR & (1<<5)) != 0);  /* wait until Tx buffer not full */
     UART0->DR = data;                  /* before giving it another byte */
 }
 
@@ -30,12 +30,6 @@ char* dec(uint32_t x, char *s)
     return s;
 }
 
-void Delay(unsigned long counter)
-{
-	unsigned long i = 0;
-	
-	for(i=0; i< counter; i++);
-}
 
 void vPrintStringAndNumber(char *str, uint32_t num)
 {
@@ -52,11 +46,11 @@ void vPrintStringAndNumber(char *str, uint32_t num)
 
 
 
-void UART_Init()
+void uart_init()
 {
 	  SYSCTL->RCGCUART |= 0x1;  /* enable clock to UART0 */
     SYSCTL->RCGCGPIO |= 0x1;  /* enable clock to PORTA */
-    Delay(1);
+		__ASM("nop");
     GPIOA->DEN = 0x3;     
     GPIOA->AFSEL = 0x3;    /* Use  alternate function */
     GPIOA->AMSEL = 0;    /* Turn off analg function*/
@@ -68,6 +62,6 @@ void UART_Init()
     UART0->FBRD = 11;       /* for 9600 baud rate, fractional = 11*/
     UART0->CC = 0;          /*select system clock*/
     UART0->LCRH = (0x3<<5);     /* data lenght 8-bit, not parity bit, no FIFO */
-    UART0->CTL = (1<<0) | (1<<8) | (1<<9);;     /* Enable UART5 module, Rx and Tx */
-	  Delay(100); 
+    UART0->CTL = (1<<0) | (1<<8) | (1<<9);     /* Enable UART5 module, Rx and Tx */
+		__ASM("nop");
 }

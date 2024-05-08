@@ -2,4 +2,4 @@
 
 void vPrintString(char *str);
 void vPrintStringAndNumber(char *str, uint32_t num);
-void UART_Init();
+void uart_init();

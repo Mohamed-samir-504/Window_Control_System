@@ -1,71 +1,42 @@
 #include "Motor.h"
 
-int duty_cycle = 4999;
 
-
-// Spin motor in one direction by giving IN1 and IN2 signals to L298N
-void Turn_oneDirection(void)
+void motor_up(void)
 {
-		 
-     GPIOF->DATA |=(1<<2);
-		//GPIOF->DATA |=(1<<1);
-		 GPIOF->DATA &=~(1<<3);
-		
+     MOTOR_UP_PORT->DATA   |=  (1<<MOTOR_UP_PIN);
+		 MOTOR_DOWN_PORT->DATA &= ~(1<<MOTOR_DOWN_PIN);
 }
 
 
-
-// Spin motor in other direction by giving IN1 and IN2 signals to L298N
-void Turn_OtherDirection(void)
+void motor_down(void)
 {
-		// SYSCTL->RCGCGPIO |= 0x20;                    /* enable clock to PORTF */
-	  // GPIOF->DIR |= (1<<3)|(1<<2)|(1<<1);                 /* pin digital */
-   //  GPIOF->DEN |= (1<<3)|(1<<2)|(1<<1);                 /* pin digital */
-     GPIOF->DATA |=(1<<3);
-		//GPIOF->DATA |=(1<<1);
-		 GPIOF->DATA &=~(1<<2);
+     MOTOR_DOWN_PORT->DATA |=  (1<<MOTOR_DOWN_PIN);
+		 MOTOR_UP_PORT->DATA   &= ~(1<<MOTOR_UP_PIN);
 }
 
 
-void stop_motor(void){
-	
-     GPIOF->DATA &=~(1<<2);
-		 GPIOF->DATA &=~(1<<3);
-	
+void motor_stop(void)
+{	
+     MOTOR_UP_PORT->DATA   &=~ (1<<MOTOR_UP_PIN);
+		 MOTOR_DOWN_PORT->DATA &=~ (1<<MOTOR_DOWN_PIN);
 }
 
-void PWM_init(void)
+void motor_init(void)
 {
-   
-   /* Clock setting for PWM and GPIO PORT */
+	if     (MOTOR_UP_PORT == GPIOA || MOTOR_DOWN_PORT == GPIOA) SYSCTL->RCGCGPIO |= 0x01; // Enable clock for PORTA
+	else if(MOTOR_UP_PORT == GPIOB || MOTOR_DOWN_PORT == GPIOB) SYSCTL->RCGCGPIO |= 0x02; // Enable clock for PORTB
+	else if(MOTOR_UP_PORT == GPIOC || MOTOR_DOWN_PORT == GPIOC) SYSCTL->RCGCGPIO |= 0x04; // Enable clock for PORTC
+	else if(MOTOR_UP_PORT == GPIOD || MOTOR_DOWN_PORT == GPIOD) SYSCTL->RCGCGPIO |= 0x08; // Enable clock for PORTD
+	else if(MOTOR_UP_PORT == GPIOE || MOTOR_DOWN_PORT == GPIOE) SYSCTL->RCGCGPIO |= 0x10; // Enable clock for PORTE
+	else if(MOTOR_UP_PORT == GPIOF || MOTOR_DOWN_PORT == GPIOF) SYSCTL->RCGCGPIO |= 0x20; // Enable clock for PORTF
+	else return;
 	
-    SYSCTL->RCGCPWM |= 2;       /* Enable clock to PWM1 module */
-    SYSCTL->RCGCGPIO |= 0x20;  /* Enable system clock to PORTF */
-	  SYSCTL->RCC |= (1<<20);    /* Enable System Clock Divisor function  */
-    SYSCTL->RCC |= 0x000E0000; /* Use pre-divider valur of 64 and after that feed clock to PWM1 module*/
-
-   /* Setting of PF2 pin for M1PWM6 channel output pin */
+	if(MOTOR_UP_PIN > 7 || MOTOR_DOWN_PIN>7) return;
 	
-   	GPIOF->AFSEL |= (1<<2);          /* PF2 sets a alternate function */
-    GPIOF->PCTL &= ~0x00000F00; /*set PF2 as output pin */
-    GPIOF->PCTL |= 0x00000500; /* make PF2 PWM output pin */
-    GPIOF->DEN |= (1<<2);          /* set PF2 as a digital pin */
-    
-    PWM1->_3_CTL &= ~(1<<0);   /* Disable Generator 3 counter */
-	  PWM1->_3_CTL &= ~(1<<1);   /* select down count mode of counter 3*/
-    PWM1->_3_GENA = 0x0000008C;  /* Set PWM output when counter reloaded and clear when matches PWMCMPA */
-    PWM1->_3_LOAD = 5000;     /* set load value for 50Hz 16MHz/64 = 250kHz and (250KHz/5000) */
-    PWM1->_3_CMPA = 4999;     /* set duty cyle to to minumum value*/
-    PWM1->_3_CTL = 1;           /* Enable Generator 3 counter */
-    PWM1->ENABLE = 0x40;      /* Enable PWM1 channel 6 output */
-}
-
-
-
-void Delay_ms(int time_ms)
-{
-    int i, j;
-    for(i = 0 ; i < time_ms; i++)
-        for(j = 0; j < 3180; j++)
-            {}  /* excute NOP for 1ms */
+	MOTOR_UP_PORT->DIR   |= (1<MOTOR_UP_PIN);
+	MOTOR_DOWN_PORT->DIR |= (1<<MOTOR_DOWN_PIN);
+	
+  MOTOR_UP_PORT->DEN   |= (1<<MOTOR_UP_PIN);
+	MOTOR_DOWN_PORT->DEN |=	(1<<MOTOR_DOWN_PIN); 
+	
 }
