@@ -6,11 +6,11 @@ int duty_cycle = 4999;
 // Spin motor in one direction by giving IN1 and IN2 signals to L298N
 void Turn_oneDirection(void)
 {
-		 SYSCTL->RCGCGPIO |= 0x01;                    /* enable clock to PORTF */
-	   GPIOA->DIR |= (1<<3)|(1<<2);                 /* pin digital */
-     GPIOA->DEN |= (1<<3)|(1<<2);                 /* pin digital */
-     GPIOA->DATA |=(1<<2);
-		 GPIOA->DATA &=~(1<<3);
+		 
+     GPIOF->DATA |=(1<<2);
+		//GPIOF->DATA |=(1<<1);
+		 GPIOF->DATA &=~(1<<3);
+		
 }
 
 
@@ -18,13 +18,21 @@ void Turn_oneDirection(void)
 // Spin motor in other direction by giving IN1 and IN2 signals to L298N
 void Turn_OtherDirection(void)
 {
-		 SYSCTL->RCGCGPIO |= 0x01;                    /* enable clock to PORTF */
-	   GPIOA->DIR |= (1<<3)|(1<<2);                 /* pin digital */
-     GPIOA->DEN |= (1<<3)|(1<<2);                 /* pin digital */
-     GPIOA->DATA |=(1<<3);
-		 GPIOA->DATA &=~(1<<2);
+		// SYSCTL->RCGCGPIO |= 0x20;                    /* enable clock to PORTF */
+	  // GPIOF->DIR |= (1<<3)|(1<<2)|(1<<1);                 /* pin digital */
+   //  GPIOF->DEN |= (1<<3)|(1<<2)|(1<<1);                 /* pin digital */
+     GPIOF->DATA |=(1<<3);
+		//GPIOF->DATA |=(1<<1);
+		 GPIOF->DATA &=~(1<<2);
 }
 
+
+void stop_motor(void){
+	
+     GPIOF->DATA &=~(1<<2);
+		 GPIOF->DATA &=~(1<<3);
+	
+}
 
 void PWM_init(void)
 {

@@ -14,14 +14,14 @@ void set_up_button_interrupt(GPIOA_Type* GPIOx, uint8_t PIN, uint8_t priority);
 #define READ_DRIVER_OPEN_BUTTON()       read_input(GPIOD,2)
 #define INIT_DRIVER_OPEN_BUTTON()       set_up_button(GPIOD,2,0)
 
-#define READ_DRIVER_CLOSE_BUTTON()      read_input(GPIOB,0)
-#define INIT_DRIVER_CLOSE_BUTTON()      set_up_button(GPIOB,0,0)
+#define READ_DRIVER_CLOSE_BUTTON()      read_input(GPIOD,3)
+#define INIT_DRIVER_CLOSE_BUTTON()      set_up_button(GPIOD,3,0)
 
-#define READ_LIMIT_SW1()      					read_input(GPIOB,1)
-#define INIT_LIMIT_SW1()       					set_up_button(GPIOB,1,0)
+#define READ_LIMIT_SW1()      					read_input(GPIOB,0)
+#define INIT_LIMIT_SW1()       					set_up_button(GPIOB,0,0)
 
-#define READ_LIMIT_SW2()      					read_input(GPIOF,1)
-#define INIT_LIMIT_SW2()        				set_up_button(GPIOF,1,0)
+#define READ_LIMIT_SW2()      					read_input(GPIOB,1)
+#define INIT_LIMIT_SW2()        				set_up_button(GPIOB,1,0)
 
 
 #define READ_LOCK_SW()                  read_input(GPIOE,1)

@@ -41,7 +41,14 @@ int main( void )
 {
 	INIT_BUTTONS();
 	UART_Init();
-	while(1);
+	SYSCTL->RCGCGPIO |= 0x20;                    /* enable clock to PORTF */
+	   GPIOF->DIR |= (1<<2)|(1<<3);                 /* pin digital */
+     GPIOF->DEN |= (1<<2)|(1<<3); 
+/* pin digital */
+		
+	while(1){
+		
+	}
 }
 
 
@@ -51,6 +58,8 @@ void GPIOE_Handler(){
 	if (GPIOE->RIS & 0x4){
 		//TO DO
 		//give jam semaphore to unblock jam task
+	//	Turn_oneDirection();
+		Turn_oneDirection();
 		x =4;
 	}
 
@@ -58,6 +67,8 @@ void GPIOE_Handler(){
 	else if (GPIOE->RIS & 0x2){
 		//TO DO
 		//give lock semaphore to unblock lock task
+	//	stop_motor();
+		stop_motor();
 		x=4;
 	}
 	GPIOE_CLEAR_INTERRUPTS();
