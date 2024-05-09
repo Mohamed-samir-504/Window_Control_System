@@ -10,3 +10,5 @@ void motor_init(void);
 #define MOTOR_DOWN_PORT    GPIOF
 #define MOTOR_DOWN_PIN     3
 
+typedef enum {UP, DOWN, OFF}MotorState;
+
