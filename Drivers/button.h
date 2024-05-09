@@ -26,11 +26,12 @@ void set_up_button_interrupt(GPIOA_Type* GPIOx, uint8_t PIN, uint8_t priority);
 
 #define READ_LOCK_SW()                  read_input(GPIOE,1)
 #define INIT_LOCK_SW()   								set_up_button(GPIOE,1,0);\
-																				set_up_button_interrupt(GPIOE,1,3)
+																				set_up_button_interrupt(GPIOE,1,7)
 
 #define READ_JAM_BUTTON()               read_input(GPIOE,2)
+
 #define INIT_JAM_BUTTON()   						set_up_button(GPIOE,2,0);\
-																				set_up_button_interrupt(GPIOE,2,3)
+																				set_up_button_interrupt(GPIOE,2,7)
 
 #define INIT_BUTTONS() 									INIT_PASSENGER_OPEN_BUTTON();\
 																				INIT_PASSENGER_CLOSE_BUTTON();\

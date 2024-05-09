@@ -48,45 +48,48 @@ void set_up_button_interrupt(GPIOA_Type* GPIOx, uint8_t PIN, uint8_t priority)
 {
 	if(priority>7 || PIN>7) return;
 		
-	if (GPIOx == GPIOA) 
-	{
-		NVIC->IPR[0] = priority << 5;
-		NVIC->ISER[0] |= 1<< GPIOA_IRQn;
-	}
-	
-	else if (GPIOx == GPIOB)
-	{
-		NVIC->IPR[0] = priority << 13;
-		NVIC->ISER[0] |= 1<< GPIOB_IRQn;
-	}
-	else if (GPIOx == GPIOC)
-	{
-		NVIC->IPR[0] = priority << 21;
-		NVIC->ISER[0] |= 1<< GPIOC_IRQn;
-	}
-	else if (GPIOx == GPIOD)
-	{
-		NVIC->IPR[0] = priority << 29;
-		NVIC->ISER[0] |= 1<< GPIOD_IRQn;
-	}
-	else if (GPIOx == GPIOE)
-	{
-		NVIC->IPR[1] = priority << 5;
-		NVIC->ISER[0] |= 1<< GPIOE_IRQn;
-	}
-	else if (GPIOx == GPIOF) 
-	{
-		NVIC->IPR[7] = priority << 21;
-		NVIC->ISER[0] |= 1<< GPIOF_IRQn;
-	}
-	else return;
-	
-	
 	GPIOx->IS  &= ~(1<<PIN);
 	GPIOx->IBE &= ~(1<<PIN);
 	GPIOx->IEV |=  (1<<PIN);
 	GPIOx->ICR |=  (1<<PIN);
 	GPIOx->IM  |=  (1<<PIN);
+
+		
+	if (GPIOx == GPIOA) 
+	{
+		NVIC_EnableIRQ(GPIOA_IRQn);
+		NVIC_SetPriority(GPIOA_IRQn,priority);
+	}
+	
+	else if (GPIOx == GPIOB)
+	{
+		NVIC_EnableIRQ(GPIOB_IRQn);
+		NVIC_SetPriority(GPIOB_IRQn,priority);
+	}
+	else if (GPIOx == GPIOC)
+	{
+		NVIC_EnableIRQ(GPIOC_IRQn);
+		NVIC_SetPriority(GPIOC_IRQn,priority);
+	}
+	else if (GPIOx == GPIOD)
+	{
+		NVIC_EnableIRQ(GPIOD_IRQn);
+		NVIC_SetPriority(GPIOD_IRQn,priority);
+	}
+	else if (GPIOx == GPIOE)
+	{
+		NVIC_EnableIRQ(GPIOE_IRQn);
+		NVIC_SetPriority(GPIOE_IRQn,priority);
+	
+
+	}
+	else if (GPIOx == GPIOF) 
+	{
+		NVIC_EnableIRQ(GPIOF_IRQn);
+		NVIC_SetPriority(GPIOF_IRQn,priority);
+	}
+	else return;
+	
 
 }
 

@@ -6,13 +6,24 @@
 #include "Drivers/button.h"
 #include "Drivers/Motor.h"
 
-//will be unblocked after jam interrupt
-void vJamHandler(void* pvParameters){
+SemaphoreHandle_t xJamSemaphore = NULL;
+SemaphoreHandle_t xLockSemaphore = NULL; 
 
+//will be unblocked after jam interrupt
+static void vJamHandler(void* pvParameters){
+	for(;;){
+	vPrintString("JAM BUTTON TASK STARTED");
+	xSemaphoreTake(xJamSemaphore,portMAX_DELAY);
+	vPrintString("JAM BUTTON PRESSED");
+	motor_down();
+	vTaskDelay(500/portTICK_RATE_MS); // TODO Fix to be 500ms
+	motor_stop();
+	}
 }
 
 //will be unblocked after lock interrupt
 void vLockHandler(void* pvParameters){
+	xSemaphoreTake(xLockSemaphore,portMAX_DELAY);
 
 }
 
@@ -36,13 +47,15 @@ void vMotorAction(void* pvParameters){
 
 int main( void )
 {
+
 	INIT_BUTTONS();
 	uart_init();
 	motor_init();
-	
+	xJamSemaphore  = xSemaphoreCreateBinary();
+	xLockSemaphore = xSemaphoreCreateBinary();
+	xTaskCreate(vJamHandler, "Jam Handler", 64, NULL, 1, NULL);
+	vTaskStartScheduler();
 
-/* pin digital */
-		
 	while(1){
 		
 	}
@@ -50,23 +63,19 @@ int main( void )
 
 
 void GPIOE_Handler(){
-	volatile int x = 3;
+
+
 	// if jam button caused the interrupt
-	if (GPIOE->RIS & 0x4){
-		//TO DO
-		//give jam semaphore to unblock jam task
-	//	Turn_oneDirection();
-		motor_up();
-		x =4;
+	if (GPIOE->RIS & 0x4) {
+	vPrintString("Semaphore given");
+	xSemaphoreGiveFromISR(xJamSemaphore,NULL);
 	}
+	
 
 	//if lock button caused the interrupt
 	else if (GPIOE->RIS & 0x2){
-		//TO DO
-		//give lock semaphore to unblock lock task
-	//	stop_motor();
 		motor_stop();
-		x=4;
+
 	}
 	GPIOE_CLEAR_INTERRUPTS();
 }
