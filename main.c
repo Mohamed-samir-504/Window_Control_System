@@ -8,6 +8,7 @@
 
 SemaphoreHandle_t xJamSemaphore = NULL;
 SemaphoreHandle_t xLockSemaphore = NULL;
+SemaphoreHandle_t xMutex = NULL;
 xQueueHandle xQueue; 
 
 //Shared between tasks to control motor state
@@ -39,11 +40,20 @@ void vLockTask(void* pvParameters){
 
 //will poll on driver buttons
 void vDriverTask(void* pvParameters){
+	xSemaphoreTake(xMutex,portMAX_DELAY);
 
+
+
+	xSemaphoreGive(xMutex);
 }
 
 //will poll on passenger buttons
 void vPassengerTask(void* pvParameters){
+	xSemaphoreTake(xMutex,portMAX_DELAY);
+
+
+
+	xSemaphoreGive(xMutex);
 
 }
 
@@ -59,6 +69,7 @@ void vMotorAction(void* pvParameters){
 		if(xCurrentMotorState == UP) motor_up();
 		else if (xCurrentMotorState == DOWN) motor_down();
 		else if (xCurrentMotorState == OFF) motor_stop();
+		
 	}
 }
 
@@ -76,6 +87,7 @@ int main( void )
 
 	xJamSemaphore  = xSemaphoreCreateBinary();
 	xLockSemaphore = xSemaphoreCreateBinary();
+	xMutex = xSemaphoreCreateMutex();
 
 	xTaskCreate(vJamTask, "Jam Task", 64, NULL, 1, NULL);
 	
