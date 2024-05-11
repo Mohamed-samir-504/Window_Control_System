@@ -1,24 +1,33 @@
 #include "Motor.h"
-
+#include "button.h"
 
 void motor_up(void)
 {
-     MOTOR_UP_PORT->DATA   |=  (1<<MOTOR_UP_PIN);
-		 MOTOR_DOWN_PORT->DATA &= ~(1<<MOTOR_DOWN_PIN);
+	SET_PIN(MOTOR_UP_PORT,MOTOR_UP_PIN);
+	CLEAR_PIN(MOTOR_DOWN_PORT,MOTOR_DOWN_PIN);
+
+    //MOTOR_UP_PORT->DATA   |=  (1<<MOTOR_UP_PIN);
+	//MOTOR_DOWN_PORT->DATA &= ~(1<<MOTOR_DOWN_PIN);
 }
 
 
 void motor_down(void)
 {
-     MOTOR_DOWN_PORT->DATA |=  (1<<MOTOR_DOWN_PIN);
-		 MOTOR_UP_PORT->DATA   &= ~(1<<MOTOR_UP_PIN);
+	CLEAR_PIN(MOTOR_DOWN_PORT,MOTOR_UP_PIN);
+	SET_PIN(MOTOR_UP_PORT,MOTOR_DOWN_PIN);
+	
+    //MOTOR_DOWN_PORT->DATA |=  (1<<MOTOR_DOWN_PIN);
+	//MOTOR_UP_PORT->DATA   &= ~(1<<MOTOR_UP_PIN);
 }
 
 
 void motor_stop(void)
 {	
-     MOTOR_UP_PORT->DATA   &=~ (1<<MOTOR_UP_PIN);
-		 MOTOR_DOWN_PORT->DATA &=~ (1<<MOTOR_DOWN_PIN);
+	CLEAR_PIN(MOTOR_DOWN_PORT,MOTOR_UP_PIN);
+	CLEAR_PIN(MOTOR_DOWN_PORT,MOTOR_DOWN_PIN);
+
+    //MOTOR_UP_PORT->DATA   &=~ (1<<MOTOR_UP_PIN);
+	//MOTOR_DOWN_PORT->DATA &=~ (1<<MOTOR_DOWN_PIN);
 }
 
 void motor_init(void)

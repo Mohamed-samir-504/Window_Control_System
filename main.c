@@ -6,19 +6,25 @@
 #include "Drivers/button.h"
 #include "Drivers/Motor.h"
 
+
+//======================================================== Handles ======================================================================
+
 SemaphoreHandle_t xJamSemaphore = NULL;
 SemaphoreHandle_t xLockSemaphore = NULL;
 SemaphoreHandle_t xPassengerWindowMutex = NULL;
 xQueueHandle xMotorCommandQueue; 
 TaskHandle_t xDriverHandle;
 
+
+//========================================================= Tasks =======================================================================
+
 //will be unblocked after jam interrupt
 static void vJamTask(void* pvParameters){
 	for(;;){
 	xSemaphoreTake(xJamSemaphore,portMAX_DELAY);
-	vSendMotorCommandToBack(&xMotorCommandQueue,Down)
+	vSendMotorCommandToBack(&xMotorCommandQueue,DOWN);
 	vTaskDelay(500/portTICK_RATE_MS); // TODO Fix to be 500ms
-	vSendMotorCommandToBack(&xMotorCommandQueue,OFF)
+	vSendMotorCommandToBack(&xMotorCommandQueue,OFF);
 	}
 }
 
@@ -28,14 +34,20 @@ void vLockTask(void* pvParameters){
 	for(;;){
 		xSemaphoreTake(xLockSemaphore,portMAX_DELAY);
 
+		//if lock button is on
 		if(READ_LOCK_SW() == 1){
-			
-			GPIOF->DATA
+
+			SET_PIN(GPIOF,1); //turn on red led as an indicator
+			vTaskPrioritySet(xDriverHandle,2);
+		}
+
+		//if lock button is off
+		else if (READ_LOCK_SW() == 0){
+
+			CLEAR_PIN(GPIOF,1); //turn off red led as an indicator
+			vTaskPrioritySet(xDriverHandle,1);
 		}
 	}
-	
-
-	
 
 }
 
@@ -157,7 +169,7 @@ void vMotorAction(void* pvParameters){
 }
 
 
-
+//===========================================================================================================================================
 
 
 int main( void )
@@ -173,7 +185,7 @@ int main( void )
 	xLockSemaphore = xSemaphoreCreateBinary();
 	xPassengerWindowMutex = xSemaphoreCreateMutex();
 
-	xTaskCreate(vDriverTask, "Driver Task", 64, NULL, 1, NULL);
+	xTaskCreate(vDriverTask, "Driver Task", 64, NULL, 1, &xDriverHandle);
 	xTaskCreate(vPassengerTask, "Passenger Task", 64, NULL, 1, NULL);
 	xTaskCreate(vJamTask, "Jam Task", 64, NULL, 3, NULL);
 	xTaskCreate(vLockTask, "Lock Task", 64, NULL, 3, NULL);
@@ -187,8 +199,9 @@ int main( void )
 }
 
 
-void GPIOE_Handler(){
+//========================================================== Interrupts ========================================================================
 
+void GPIOE_Handler(){
 
 	// if jam button caused the interrupt
 	if (GPIOE->RIS & 0x4) {

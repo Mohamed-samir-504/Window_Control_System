@@ -9,7 +9,7 @@ void motor_down(void);
 void motor_stop(void);
 void motor_init(void);
 void vSendMotorCommandToBack(xQueueHandle* xMotorQueue, MotorState command);
-void vSendMotorCommandToFront(xQueueHandle* xMotorQueue, MotorState command)
+void vSendMotorCommandToFront(xQueueHandle* xMotorQueue, MotorState command);
 
 #define MOTOR_UP_PORT    GPIOF
 #define MOTOR_UP_PIN     2
