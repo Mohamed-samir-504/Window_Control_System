@@ -2,7 +2,11 @@
     "files.associations": {
         "button.h": "c",
         "uart.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "motor.h": "c",
+        "queue.h": "c",
+        "semphr.h": "c",
+        "freertos.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

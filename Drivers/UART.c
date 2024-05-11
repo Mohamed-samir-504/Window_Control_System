@@ -33,10 +33,10 @@ char* dec(uint32_t x, char *s)
 
 void vPrintStringAndNumber(char *str, uint32_t num)
 {
-	char temp[10];
+	char temp[40];
 	while(*str) UART0_Transmitter(*(str++));
 	
-	char* res = dec(num,&temp[9]);
+	char* res = dec(num,&temp[39]);
 	
 	while(*res) UART0_Transmitter(*(res++));
 	

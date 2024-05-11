@@ -13,3 +13,4 @@ Objects/project.lnp
 Objects/project_Target 1.dep
 Objects/project.lnp
 EventRecorderStub.scvd
+.vscode/settings.json

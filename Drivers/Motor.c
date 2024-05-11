@@ -37,6 +37,17 @@ void motor_init(void)
 	MOTOR_DOWN_PORT->DIR |= (1<<MOTOR_DOWN_PIN);
 	
   MOTOR_UP_PORT->DEN   |= (1<<MOTOR_UP_PIN);
-	MOTOR_DOWN_PORT->DEN |=	(1<<MOTOR_DOWN_PIN); 
-	
+	MOTOR_DOWN_PORT->DEN |=	(1<<MOTOR_DOWN_PIN);
+}
+
+void vSendMotorCommandToBack(xQueueHandle* xMotorQueue, MotorState command)
+{
+	MotorState xMotorCommand = command;
+	xQueueSendToBack(*xMotorQueue,&xMotorCommand,portMAX_DELAY);
+}
+
+void vSendMotorCommandToFront(xQueueHandle* xMotorQueue, MotorState command)
+{
+	MotorState xMotorCommand = command;
+	xQueueSendToFront(*xMotorQueue,&xMotorCommand,portMAX_DELAY);
 }
