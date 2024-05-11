@@ -26,10 +26,10 @@ I (C:\Users\midot\AppData\Local\Arm\Packs\ARM\CMSIS\6.0.0\CMSIS\Core\Include\m-p
 I (C:\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x5E0D0968)
 I (C:\Users\midot\AppData\Local\Arm\Packs\ARM\CMSIS\6.0.0\CMSIS\Core\Include\m-profile\armv7m_mpu.h)(0x65802698)
 I (C:\Users\midot\AppData\Local\Arm\Packs\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123\system_TM4C123.h)(0x51B6C7E6)
-I (Drivers\button.h)(0x663F3909)
-I (Drivers\Motor.h)(0x663F385B)
-F (.\Drivers\button.c)(0x663CDFD2)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=none -mfloat-abi=soft -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-3 -O1 -ffunction-sections -w-I./RTE/RTOS-I./RTE/_Target_1-IC:/Users/midot/AppData/Local/Arm/Packs/ARM/CMSIS-FreeRTOS/10.5.1/CMSIS/RTOS2/FreeRTOS/Include-IC:/Users/midot/AppData/Local/Arm/Packs/ARM/CMSIS-FreeRTOS/10.5.1/Source/include-IC:/Users/midot/AppData/Local/Arm/Packs/ARM/CMSIS-FreeRTOS/10.5.1/Source/portable/GCC/ARM_CM3-IC:/Users/midot/AppData/Local/Arm/Packs/ARM/CMSIS/6.0.0/CMSIS/Core/Include-IC:/Users/midot/AppData/Local/Arm/Packs/Keil/TM4C_DFP/1.1.0/Device/Include/TM4C123-D__UVISION_VERSION="532" -D_RTE_ -DTM4C123GH6PM -D_RTE_-o ./objects/button.o -MD)
-I (Drivers\button.h)(0x663F3909)
+I (Drivers\button.h)(0x663F4882)
+I (Drivers\Motor.h)(0x663F47A4)
+F (.\Drivers\button.c)(0x663F469C)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=none -mfloat-abi=soft -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-3 -O1 -ffunction-sections -w-I./RTE/RTOS-I./RTE/_Target_1-IC:/Users/midot/AppData/Local/Arm/Packs/ARM/CMSIS-FreeRTOS/10.5.1/CMSIS/RTOS2/FreeRTOS/Include-IC:/Users/midot/AppData/Local/Arm/Packs/ARM/CMSIS-FreeRTOS/10.5.1/Source/include-IC:/Users/midot/AppData/Local/Arm/Packs/ARM/CMSIS-FreeRTOS/10.5.1/Source/portable/GCC/ARM_CM3-IC:/Users/midot/AppData/Local/Arm/Packs/ARM/CMSIS/6.0.0/CMSIS/Core/Include-IC:/Users/midot/AppData/Local/Arm/Packs/Keil/TM4C_DFP/1.1.0/Device/Include/TM4C123-D__UVISION_VERSION="532" -D_RTE_ -DTM4C123GH6PM -D_RTE_-o ./objects/button.o -MD)
+I (Drivers\button.h)(0x663F4882)
 I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x5F514ACE)
 I (C:\Users\midot\AppData\Local\Arm\Packs\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123\TM4C123GH6PM.h)(0x550FD41C)
 I (C:\Users\midot\AppData\Local\Arm\Packs\ARM\CMSIS\6.0.0\CMSIS\Core\Include\core_cm4.h)(0x65802698)
@@ -39,9 +39,9 @@ I (C:\Users\midot\AppData\Local\Arm\Packs\ARM\CMSIS\6.0.0\CMSIS\Core\Include\m-p
 I (C:\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x5E0D0968)
 I (C:\Users\midot\AppData\Local\Arm\Packs\ARM\CMSIS\6.0.0\CMSIS\Core\Include\m-profile\armv7m_mpu.h)(0x65802698)
 I (C:\Users\midot\AppData\Local\Arm\Packs\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123\system_TM4C123.h)(0x51B6C7E6)
-F (.\Drivers\button.h)(0x663F3909)()
-F (.\Drivers\Motor.c)(0x663F36C6)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=none -mfloat-abi=soft -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-3 -O1 -ffunction-sections -w-I./RTE/RTOS-I./RTE/_Target_1-IC:/Users/midot/AppData/Local/Arm/Packs/ARM/CMSIS-FreeRTOS/10.5.1/CMSIS/RTOS2/FreeRTOS/Include-IC:/Users/midot/AppData/Local/Arm/Packs/ARM/CMSIS-FreeRTOS/10.5.1/Source/include-IC:/Users/midot/AppData/Local/Arm/Packs/ARM/CMSIS-FreeRTOS/10.5.1/Source/portable/GCC/ARM_CM3-IC:/Users/midot/AppData/Local/Arm/Packs/ARM/CMSIS/6.0.0/CMSIS/Core/Include-IC:/Users/midot/AppData/Local/Arm/Packs/Keil/TM4C_DFP/1.1.0/Device/Include/TM4C123-D__UVISION_VERSION="532" -D_RTE_ -DTM4C123GH6PM -D_RTE_-o ./objects/motor.o -MD)
-I (Drivers\Motor.h)(0x663F385B)
+F (.\Drivers\button.h)(0x663F4882)()
+F (.\Drivers\Motor.c)(0x663F482F)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=none -mfloat-abi=soft -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-3 -O1 -ffunction-sections -w-I./RTE/RTOS-I./RTE/_Target_1-IC:/Users/midot/AppData/Local/Arm/Packs/ARM/CMSIS-FreeRTOS/10.5.1/CMSIS/RTOS2/FreeRTOS/Include-IC:/Users/midot/AppData/Local/Arm/Packs/ARM/CMSIS-FreeRTOS/10.5.1/Source/include-IC:/Users/midot/AppData/Local/Arm/Packs/ARM/CMSIS-FreeRTOS/10.5.1/Source/portable/GCC/ARM_CM3-IC:/Users/midot/AppData/Local/Arm/Packs/ARM/CMSIS/6.0.0/CMSIS/Core/Include-IC:/Users/midot/AppData/Local/Arm/Packs/Keil/TM4C_DFP/1.1.0/Device/Include/TM4C123-D__UVISION_VERSION="532" -D_RTE_ -DTM4C123GH6PM -D_RTE_-o ./objects/motor.o -MD)
+I (Drivers\Motor.h)(0x663F47A4)
 I (C:\Users\midot\AppData\Local\Arm\Packs\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123\TM4C123GH6PM.h)(0x550FD41C)
 I (C:\Users\midot\AppData\Local\Arm\Packs\ARM\CMSIS\6.0.0\CMSIS\Core\Include\core_cm4.h)(0x65802698)
 I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x5F514ACE)
@@ -66,8 +66,8 @@ I (C:\Users\midot\AppData\Local\Arm\Packs\ARM\CMSIS-FreeRTOS\10.5.1\Source\inclu
 I (C:\Users\midot\AppData\Local\Arm\Packs\ARM\CMSIS-FreeRTOS\10.5.1\Source\include\list.h)(0x6386FA70)
 I (C:\Users\midot\AppData\Local\Arm\Packs\ARM\CMSIS-FreeRTOS\10.5.1\Source\include\queue.h)(0x6386FA70)
 I (C:\Users\midot\AppData\Local\Arm\Packs\ARM\CMSIS-FreeRTOS\10.5.1\Source\include\semphr.h)(0x6386FA70)
-I (Drivers\button.h)(0x663F3909)
-F (.\Drivers\Motor.h)(0x663F385B)()
+I (Drivers\button.h)(0x663F4882)
+F (.\Drivers\Motor.h)(0x663F47A4)()
 F (.\Drivers\UART.c)(0x663F2FDA)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=none -mfloat-abi=soft -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-3 -O1 -ffunction-sections -w-I./RTE/RTOS-I./RTE/_Target_1-IC:/Users/midot/AppData/Local/Arm/Packs/ARM/CMSIS-FreeRTOS/10.5.1/CMSIS/RTOS2/FreeRTOS/Include-IC:/Users/midot/AppData/Local/Arm/Packs/ARM/CMSIS-FreeRTOS/10.5.1/Source/include-IC:/Users/midot/AppData/Local/Arm/Packs/ARM/CMSIS-FreeRTOS/10.5.1/Source/portable/GCC/ARM_CM3-IC:/Users/midot/AppData/Local/Arm/Packs/ARM/CMSIS/6.0.0/CMSIS/Core/Include-IC:/Users/midot/AppData/Local/Arm/Packs/Keil/TM4C_DFP/1.1.0/Device/Include/TM4C123-D__UVISION_VERSION="532" -D_RTE_ -DTM4C123GH6PM -D_RTE_-o ./objects/uart.o -MD)
 I (C:\Users\midot\AppData\Local\Arm\Packs\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123\TM4C123GH6PM.h)(0x550FD41C)
 I (C:\Users\midot\AppData\Local\Arm\Packs\ARM\CMSIS\6.0.0\CMSIS\Core\Include\core_cm4.h)(0x65802698)

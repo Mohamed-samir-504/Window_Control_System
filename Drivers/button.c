@@ -15,7 +15,7 @@
 	
 */
 
-void set_up_button(GPIOA_Type* GPIOx, uint8_t PIN, uint8_t PUR_EN)
+void set_up_input_pin(GPIOA_Type* GPIOx, uint8_t PIN, uint8_t PUR_EN)
 {
 	if(PIN>7) return;
 	
@@ -40,6 +40,24 @@ void set_up_button(GPIOA_Type* GPIOx, uint8_t PIN, uint8_t PUR_EN)
 	
    GPIOx->DIR &= ~(1<<PIN);           // set PIN as an input (button). 
    GPIOx->DEN |=  (1<<PIN);           // digital enable GPIO pin.
+}
+
+
+void set_up_output_pin(GPIOA_Type* GPIOx, uint8_t PIN){
+
+	if(PIN>7) return;
+	
+	if     (GPIOx == GPIOA) SYSCTL->RCGCGPIO |= 0x01; // Enable clock for PORTA
+	else if(GPIOx == GPIOB) SYSCTL->RCGCGPIO |= 0x02; // Enable clock for PORTB
+	else if(GPIOx == GPIOC) SYSCTL->RCGCGPIO |= 0x04; // Enable clock for PORTC
+	else if(GPIOx == GPIOD) SYSCTL->RCGCGPIO |= 0x08; // Enable clock for PORTD
+	else if(GPIOx == GPIOE) SYSCTL->RCGCGPIO |= 0x10; // Enable clock for PORTE
+	else if(GPIOx == GPIOF) SYSCTL->RCGCGPIO |= 0x20; // Enable clock for PORTF
+	else return;
+
+	GPIOx->DIR |=  (1<<PIN);           // set PIN as an output (button). 
+    GPIOx->DEN |=  (1<<PIN);           // digital enable GPIO pin.
+
 }
 
 
