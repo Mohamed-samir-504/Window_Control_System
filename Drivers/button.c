@@ -1,20 +1,16 @@
 #include "button.h"
 
-
-
 /*
-	set up a GPIO pin to be used as an input button.
+	@brief Set up a GPIO pin to be used as an input button.
 	
-	@parameters
-	GPIOx : must be a value from GPIOA -> GPIOF.
-	PIN : must be from 0 to 7 or withdraw ASAP.
-	PUR_EN : this is set to 0 then only pull down resistor is enabled, if this is set to 1 then only pull up resistor is enabled.
-	
+	@param GPIOx The GPIO port for that pin (must be a value from GPIOA -> GPIOF). 
+	@param PIN The PIN number (must be from 0 to 7). 
+	@param PUR_EN set to 1 to enable pull-up register, set to 0 to enable pull-down register.
+
 	@note
-	There are some GPIO pins that has special considerations (need CR and unlocking w bta3 fa fakes) at page 671 in DATA SHEET (PA[5:0], PB[3:2], PC[3:0],PD[7], PF[0]).
+	* There are some GPIO pins that has special considerations (need CR and unlocking w bta3 fa fakes) at page 671 in DATA SHEET (PA[5:0], PB[3:2], PC[3:0],PD[7], PF[0]).
 	
 */
-
 void set_up_input_pin(GPIOA_Type* GPIOx, uint8_t PIN, uint8_t PUR_EN)
 {
 	if(PIN>7) return;
@@ -42,7 +38,14 @@ void set_up_input_pin(GPIOA_Type* GPIOx, uint8_t PIN, uint8_t PUR_EN)
    GPIOx->DEN |=  (1<<PIN);           // digital enable GPIO pin.
 }
 
+/*
+	@brief Set up a GPIO pin to be used as an output.
 
+	@param GPIOx The GPIO port for that pin (must be a value from GPIOA -> GPIOF). 
+	@param PIN The PIN number (must be from 0 to 7). 
+
+	@note There are some GPIO pins that has special considerations (need CR and unlocking w bta3 fa fakes) at page 671 in DATA SHEET (PA[5:0], PB[3:2], PC[3:0],PD[7], PF[0]).
+*/
 void set_up_output_pin(GPIOA_Type* GPIOx, uint8_t PIN){
 
 	if(PIN>7) return;
@@ -55,13 +58,23 @@ void set_up_output_pin(GPIOA_Type* GPIOx, uint8_t PIN){
 	else if(GPIOx == GPIOF) SYSCTL->RCGCGPIO |= 0x20; // Enable clock for PORTF
 	else return;
 
-	GPIOx->DIR |=  (1<<PIN);           // set PIN as an output (button). 
+	GPIOx->DIR |=  (1<<PIN);           // set PIN as an output. 
     GPIOx->DEN |=  (1<<PIN);           // digital enable GPIO pin.
 
 }
 
 
+/*
+	@brief Set up an interrupt for a GPIO pin input button.
+	
+	@param GPIOx The GPIO port for that pin (must be a value from GPIOA -> GPIOF). 
+	@param PIN The PIN number (must be from 0 to 7). 
+	@param priority the priority of the intrrupt (internal).
 
+	@note
+	* There are some GPIO pins that has special considerations (need CR and unlocking w bta3 fa fakes) at page 671 in DATA SHEET (PA[5:0], PB[3:2], PC[3:0],PD[7], PF[0]).
+	
+*/
 void set_up_button_interrupt(GPIOA_Type* GPIOx, uint8_t PIN, uint8_t priority)
 {
 	if(priority>7 || PIN>7) return;
@@ -98,8 +111,6 @@ void set_up_button_interrupt(GPIOA_Type* GPIOx, uint8_t PIN, uint8_t priority)
 	{
 		NVIC_EnableIRQ(GPIOE_IRQn);
 		NVIC_SetPriority(GPIOE_IRQn,priority);
-	
-
 	}
 	else if (GPIOx == GPIOF) 
 	{
@@ -107,8 +118,6 @@ void set_up_button_interrupt(GPIOA_Type* GPIOx, uint8_t PIN, uint8_t priority)
 		NVIC_SetPriority(GPIOF_IRQn,priority);
 	}
 	else return;
-	
-
 }
 
 

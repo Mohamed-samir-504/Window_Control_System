@@ -15,11 +15,45 @@ SemaphoreHandle_t xPassengerWindowMutex = NULL;
 xQueueHandle xMotorCommandQueue; 
 TaskHandle_t xDriverHandle;
 
-
 //========================================================= Tasks =======================================================================
 
-//will be unblocked after jam interrupt
-static void vJamTask(void* pvParameters){
+void vJamTask(void* pvParameters);
+void vLockTask(void* pvParameters);
+void vDriverTask(void* pvParameters);
+void vPassengerTask(void* pvParameters);
+void vMotorAction(void* pvParameters);
+
+//===========================================================================================================================================
+
+
+int main( void )
+{
+	INIT_BUTTONS();
+	uart_init();
+	motor_init();
+	
+	xMotorCommandQueue = xQueueCreate(3,sizeof(MotorState));
+
+	xJamSemaphore  = xSemaphoreCreateBinary();
+	xLockSemaphore = xSemaphoreCreateBinary();
+	xPassengerWindowMutex = xSemaphoreCreateMutex();
+
+	xTaskCreate(vDriverTask, "Driver Task", 64, NULL, 1, &xDriverHandle);
+	xTaskCreate(vPassengerTask, "Passenger Task", 64, NULL, 1, NULL);
+	xTaskCreate(vJamTask, "Jam Task", 64, NULL, 3, NULL);
+	xTaskCreate(vLockTask, "Lock Task", 64, NULL, 3, NULL);
+	xTaskCreate(vMotorAction, "Motor Task", 64, NULL, 4, NULL);
+	vTaskStartScheduler();
+
+	while(1){
+		
+	}
+}
+
+
+
+// will be unblocked after jam interrupt
+void vJamTask(void* pvParameters){
 	for(;;){
 	xSemaphoreTake(xJamSemaphore,portMAX_DELAY);
 	vSendMotorCommandToBack(&xMotorCommandQueue,DOWN);
@@ -28,7 +62,7 @@ static void vJamTask(void* pvParameters){
 	}
 }
 
-//will be unblocked after lock interrupt
+// will be unblocked after lock interrupt
 void vLockTask(void* pvParameters){
 
 	for(;;){
@@ -173,52 +207,14 @@ void vMotorAction(void* pvParameters){
 }
 
 
-//===========================================================================================================================================
-
-
-int main( void )
-{
-
-	INIT_BUTTONS();
-	uart_init();
-	motor_init();
-	
-	xMotorCommandQueue = xQueueCreate(3,sizeof(MotorState));
-
-	xJamSemaphore  = xSemaphoreCreateBinary();
-	xLockSemaphore = xSemaphoreCreateBinary();
-	xPassengerWindowMutex = xSemaphoreCreateMutex();
-
-	xTaskCreate(vDriverTask, "Driver Task", 64, NULL, 1, &xDriverHandle);
-	xTaskCreate(vPassengerTask, "Passenger Task", 64, NULL, 1, NULL);
-	xTaskCreate(vJamTask, "Jam Task", 64, NULL, 3, NULL);
-	xTaskCreate(vLockTask, "Lock Task", 64, NULL, 3, NULL);
-	xTaskCreate(vMotorAction, "Motor Task", 64, NULL, 4, NULL);
-
-	vTaskStartScheduler();
-
-	while(1){
-		
-	}
-}
-
-
-//========================================================== Interrupts ========================================================================
+//========================================================== Interrupt Handlers ========================================================================
 
 void GPIOE_Handler(){
 
 	// if jam button caused the interrupt
-	if (GPIOE->RIS & 0x4) {
-		vPrintString("Jam Semaphore given");
-		xSemaphoreGiveFromISR(xJamSemaphore,NULL);
-	}
-	
-
+	if (GPIOE->RIS & 0x4) xSemaphoreGiveFromISR(xJamSemaphore,NULL);
 	//if lock button caused the interrupt
-	else if (GPIOE->RIS & 0x2){
-		vPrintString("Lock Semaphore given");
-		xSemaphoreGiveFromISR(xLockSemaphore,NULL);
-	}
+	else if (GPIOE->RIS & 0x2) xSemaphoreGiveFromISR(xLockSemaphore,NULL);
 
 	GPIOE_CLEAR_INTERRUPTS();
 }
