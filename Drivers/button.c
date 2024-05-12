@@ -75,13 +75,15 @@ void set_up_output_pin(GPIOA_Type* GPIOx, uint8_t PIN){
 	* There are some GPIO pins that has special considerations (need CR and unlocking w bta3 fa fakes) at page 671 in DATA SHEET (PA[5:0], PB[3:2], PC[3:0],PD[7], PF[0]).
 	
 */
-void set_up_button_interrupt(GPIOA_Type* GPIOx, uint8_t PIN, uint8_t priority)
+void set_up_button_interrupt(GPIOA_Type* GPIOx, uint8_t PIN, uint8_t priority, uint8_t both_edges)
 {
 	if(priority>7 || PIN>7) return;
 		
 	GPIOx->IS  &= ~(1<<PIN);
-	GPIOx->IBE &= ~(1<<PIN);
-	GPIOx->IEV |=  (1<<PIN);
+	if(!both_edges) GPIOx->IBE &= ~(1<<PIN);
+	else GPIOx->IBE |= (1<<PIN);
+	
+	//GPIOx->IEV |=  (1<<PIN);
 	GPIOx->ICR |=  (1<<PIN);
 	GPIOx->IM  |=  (1<<PIN);
 
