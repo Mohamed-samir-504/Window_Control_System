@@ -24,15 +24,23 @@ void vPassengerTask(void* pvParameters);
 void vMotorAction(void* pvParameters);
 
 //===========================================================================================================================================
+void Delay_ms(int time_ms)
+{
+    int i, j;
+    for(i = 0 ; i < time_ms; i++)
+        for(j = 0; j < 3180; j++)
+            {}  /* excute NOP for 1ms */
+}
 
 
 int main( void )
 {
+	
 	INIT_BUTTONS();
 	uart_init();
 	motor_init();
 	
-	xMotorCommandQueue = xQueueCreate(3,sizeof(MotorState));
+	xMotorCommandQueue = xQueueCreate(2,sizeof(MotorState));
 
 	xJamSemaphore  = xSemaphoreCreateBinary();
 	xLockSemaphore = xSemaphoreCreateBinary();
@@ -51,14 +59,17 @@ int main( void )
 }
 
 
-
+int i = 0;
 // will be unblocked after jam interrupt
 void vJamTask(void* pvParameters){
 	for(;;){
 	xSemaphoreTake(xJamSemaphore,portMAX_DELAY);
+	vPrintStringAndNumber("jam task started  ", i);
 	vSendMotorCommandToBack(&xMotorCommandQueue,DOWN);
-	vTaskDelay(500/portTICK_RATE_MS); // TODO Fix to be 500ms
+	//Delay_ms(3000);
+	vTaskDelay(1000/portTICK_RATE_MS); // TODO Fix to be 500ms
 	vSendMotorCommandToBack(&xMotorCommandQueue,OFF);
+	i++;
 	}
 }
 
@@ -67,17 +78,17 @@ void vLockTask(void* pvParameters){
 
 	for(;;){
 		xSemaphoreTake(xLockSemaphore,portMAX_DELAY);
-
+		//vTaskDelay(50/portTICK_RATE_MS);
 		//if lock button is on
-		if(READ_LOCK_SW() == 1){
-
+		if(READ_LOCK_SW()){
+			vPrintString("lock is on");
 			SET_PIN(GPIOF,1); //turn on red led as an indicator
 			vTaskPrioritySet(xDriverHandle,2); //so that only the driver can control the window
 		}
 
 		//if lock button is off
-		else if (READ_LOCK_SW() == 0){
-
+		else{
+			vPrintString("lock is off");
 			CLEAR_PIN(GPIOF,1); //turn off red led as an indicator
 			vTaskPrioritySet(xDriverHandle,1);
 		}
@@ -88,9 +99,10 @@ void vLockTask(void* pvParameters){
 
 // handle driver's controls
 void vDriverTask(void* pvParameters){
-
+	
 	for(;;){
 
+		
 		xSemaphoreTake(xPassengerWindowMutex, portMAX_DELAY);
 	
 		if(READ_DRIVER_OPEN_BUTTON() && READ_DRIVER_CLOSE_BUTTON()) // both buttons shouldn't be pressed together.
@@ -101,34 +113,46 @@ void vDriverTask(void* pvParameters){
 		uint8_t button_open_before  =  READ_DRIVER_OPEN_BUTTON();
 		uint8_t button_close_before =  READ_DRIVER_CLOSE_BUTTON();
 
-		vTaskDelay(50/portTICK_RATE_MS); // sample and wait to see if the user is still holding the button
+		//Delay_ms(100);
+		vTaskDelay(100/portTICK_RATE_MS); // sample and wait to see if the user is still holding the button
 
 		if(!READ_DRIVER_CLOSE_BUTTON() && button_close_before && !READ_LIMIT_SW1()) // if the driver has pressed the close button without holding.
 		{
+			vPrintString("driver has pressed the close button");
 			vSendMotorCommandToBack(&xMotorCommandQueue,UP);
+			vPrintString("waiting for sw1");
 			while (!READ_LIMIT_SW1());   // while the limit is not reached, wait.
+			vPrintString("off");
 			vSendMotorCommandToBack(&xMotorCommandQueue,OFF);
 		}
 
 		else if (READ_DRIVER_CLOSE_BUTTON() && button_close_before && !READ_LIMIT_SW1()) // if the driver is holding the close button.
 		{
+			vPrintString("driver is holding the close button");
 			vSendMotorCommandToBack(&xMotorCommandQueue,UP);
+			vPrintString("waiting for sw1 or user lift");
 			while (READ_DRIVER_CLOSE_BUTTON() && !READ_LIMIT_SW1()); // while the driver is pressing the close button and the limit is not reached.
 			vSendMotorCommandToBack(&xMotorCommandQueue,OFF);
+			vPrintString("off");
 		}
 
 		if(!READ_DRIVER_OPEN_BUTTON() && button_open_before&& !READ_LIMIT_SW2()) // if the driver has pressed the open button without holding.
-		{	
+		{	vPrintString("driver has pressed the open button");
 			vSendMotorCommandToBack(&xMotorCommandQueue,DOWN);
+			vPrintString("waiting for sw2");
 			while (!READ_LIMIT_SW2()); // while the limit is not reached, wait.
 			vSendMotorCommandToBack(&xMotorCommandQueue,OFF);
+			vPrintString("off");
 		}
 
 		else if (READ_DRIVER_OPEN_BUTTON() && button_open_before&& !READ_LIMIT_SW2()) // if the driver is holding the open button.
 		{
+			vPrintString("driver is holding the open button");
 			vSendMotorCommandToBack(&xMotorCommandQueue,DOWN);
+			vPrintString("waiting for sw2 or user lift");
 			while (READ_DRIVER_OPEN_BUTTON() && !READ_LIMIT_SW2()); // while the driver is pressing the open button and the limit is not reached.
 			vSendMotorCommandToBack(&xMotorCommandQueue,OFF);
+			vPrintString("off");
 		}
 
 
@@ -152,8 +176,8 @@ void vPassengerTask(void* pvParameters){
 
 		uint8_t button_open_before  =  READ_PASSENGER_OPEN_BUTTON();
 		uint8_t button_close_before =  READ_PASSENGER_CLOSE_BUTTON();
-
-		vTaskDelay(50/portTICK_RATE_MS); // sample and wait to see if the user is still holding the button
+		vTaskDelay(100/portTICK_RATE_MS);
+		//vTaskDelay(50/portTICK_RATE_MS); // sample and wait to see if the user is still holding the button
 
 		if(!READ_PASSENGER_CLOSE_BUTTON() && button_close_before && !READ_LIMIT_SW1()) // if the passenger has pressed the close button without holding.
 		{
@@ -210,11 +234,23 @@ void vMotorAction(void* pvParameters){
 //========================================================== Interrupt Handlers ========================================================================
 
 void GPIOE_Handler(){
-
+	vPrintString("interrupt");
+	
 	// if jam button caused the interrupt
 	if (GPIOE->RIS & 0x4) xSemaphoreGiveFromISR(xJamSemaphore,NULL);
-	//if lock button caused the interrupt
-	else if (GPIOE->RIS & 0x2) xSemaphoreGiveFromISR(xLockSemaphore,NULL);
 
 	GPIOE_CLEAR_INTERRUPTS();
+}
+
+
+
+void GPIOC_Handler(){
+	vPrintString("interrupt");
+	
+	// if jam button caused the interrupt
+	if (GPIOC->RIS & (1<<6)) xSemaphoreGiveFromISR(xLockSemaphore,NULL);
+	//if lock button caused the interrupt
+
+
+	GPIOC_CLEAR_INTERRUPTS();
 }
