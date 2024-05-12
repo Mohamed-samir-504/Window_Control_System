@@ -237,20 +237,8 @@ void GPIOE_Handler(){
 	vPrintString("interrupt");
 	
 	// if jam button caused the interrupt
-	if (GPIOE->RIS & 0x4) xSemaphoreGiveFromISR(xJamSemaphore,NULL);
+	if (GPIOE->RIS & (1<<4)) xSemaphoreGiveFromISR(xLockSemaphore,NULL);
+	else if(GPIOE->RIS & (1<<5)) xSemaphoreGiveFromISR(xJamSemaphore,NULL);
 
 	GPIOE_CLEAR_INTERRUPTS();
-}
-
-
-
-void GPIOC_Handler(){
-	vPrintString("interrupt");
-	
-	// if jam button caused the interrupt
-	if (GPIOC->RIS & (1<<6)) xSemaphoreGiveFromISR(xLockSemaphore,NULL);
-	//if lock button caused the interrupt
-
-
-	GPIOC_CLEAR_INTERRUPTS();
 }

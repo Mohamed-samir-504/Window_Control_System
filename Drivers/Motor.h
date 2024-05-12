@@ -11,8 +11,8 @@ void motor_init(void);
 void vSendMotorCommandToBack(xQueueHandle* xMotorQueue, MotorState command);
 void vSendMotorCommandToFront(xQueueHandle* xMotorQueue, MotorState command);
 
-#define MOTOR_UP_PIN     4
-#define MOTOR_DOWN_PIN   5
+#define MOTOR_UP_PIN     6
+#define MOTOR_DOWN_PIN   7
 
-#define MOTOR_PORT GPIOE
+#define MOTOR_PORT GPIOD
 
