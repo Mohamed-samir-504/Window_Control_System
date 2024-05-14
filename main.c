@@ -14,7 +14,7 @@ SemaphoreHandle_t xLockSemaphore = NULL;
 SemaphoreHandle_t xPassengerWindowMutex = NULL;
 xQueueHandle xMotorCommandQueue; 
 TaskHandle_t xDriverHandle;
-
+TaskHandle_t xPassengerHandle;
 //========================================================= Tasks =======================================================================
 
 void vJamTask(void* pvParameters);
@@ -39,7 +39,7 @@ int main( void )
 	xPassengerWindowMutex = xSemaphoreCreateMutex();
 
 	xTaskCreate(vDriverTask, "Driver Task", 64, NULL, 1, &xDriverHandle);
-	xTaskCreate(vPassengerTask, "Passenger Task", 64, NULL, 1, NULL);
+	xTaskCreate(vPassengerTask, "Passenger Task", 64, NULL, 1, &xPassengerHandle);
 	xTaskCreate(vJamTask, "Jam Task", 64, NULL, 3, NULL);
 	xTaskCreate(vLockTask, "Lock Task", 64, NULL, 3, NULL);
 	xTaskCreate(vMotorAction, "Motor Task", 64, NULL, 4, NULL);
@@ -72,13 +72,17 @@ void vLockTask(void* pvParameters){
 		//vTaskDelay(50/portTICK_RATE_MS);
 		//if lock button is on
 		if(READ_LOCK_SW()){
+			
 			vPrintString("lock is on");
 			SET_PIN(GPIOF,1); //turn on red led as an indicator
 			vTaskPrioritySet(xDriverHandle,2); //so that only the driver can control the window
+			
+			
 		}
 
 		//if lock button is off
 		else{
+			
 			vPrintString("lock is off");
 			CLEAR_PIN(GPIOF,1); //turn off red led as an indicator
 			vTaskPrioritySet(xDriverHandle,1);
@@ -156,9 +160,10 @@ void vDriverTask(void* pvParameters){
 void vPassengerTask(void* pvParameters){
 	
 	for(;;){
-
+		
 		xSemaphoreTake(xPassengerWindowMutex, portMAX_DELAY);
-
+		
+		
 		if(READ_PASSENGER_OPEN_BUTTON() && READ_PASSENGER_CLOSE_BUTTON()) // both buttons shouldn't be pressed together.
 		{
 			xSemaphoreGive(xPassengerWindowMutex);
