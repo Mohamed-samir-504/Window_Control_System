@@ -1,7 +1,7 @@
 Dependencies for Project 'project', Target 'Target 1': (DO NOT MODIFY !)
 CompilerVersion: 6210000::V6.21::ARMCLANG
-F (.\Drivers\project_config.h)(0x6642CE9A)()
-F (.\main.c)(0x6642C723)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=none -mfloat-abi=soft -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -O1 -ffunction-sections -w-I./RTE/RTOS-I./RTE/_Target_1-IC:/Users/Mark/AppData/Local/Arm/Packs/ARM/CMSIS-FreeRTOS/10.5.1/CMSIS/RTOS2/FreeRTOS/Include-IC:/Users/Mark/AppData/Local/Arm/Packs/ARM/CMSIS-FreeRTOS/10.5.1/Source/include-IC:/Users/Mark/AppData/Local/Arm/Packs/ARM/CMSIS-FreeRTOS/10.5.1/Source/portable/GCC/ARM_CM3-IC:/Users/Mark/AppData/Local/Arm/Packs/ARM/CMSIS/6.0.0/CMSIS/Core/Include-IC:/Users/Mark/AppData/Local/Arm/Packs/Keil/TM4C_DFP/1.1.0/Device/Include/TM4C123-D__UVISION_VERSION="539" -D_RTE_ -DTM4C123GH6PM -D_RTE_-o ./objects/main.o -MD)
+F (.\Drivers\project_config.h)(0x664359E4)()
+F (.\main.c)(0x66435B4A)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=none -mfloat-abi=soft -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -O1 -ffunction-sections -w-I./RTE/RTOS-I./RTE/_Target_1-IC:/Users/Mark/AppData/Local/Arm/Packs/ARM/CMSIS-FreeRTOS/10.5.1/CMSIS/RTOS2/FreeRTOS/Include-IC:/Users/Mark/AppData/Local/Arm/Packs/ARM/CMSIS-FreeRTOS/10.5.1/Source/include-IC:/Users/Mark/AppData/Local/Arm/Packs/ARM/CMSIS-FreeRTOS/10.5.1/Source/portable/GCC/ARM_CM3-IC:/Users/Mark/AppData/Local/Arm/Packs/ARM/CMSIS/6.0.0/CMSIS/Core/Include-IC:/Users/Mark/AppData/Local/Arm/Packs/Keil/TM4C_DFP/1.1.0/Device/Include/TM4C123-D__UVISION_VERSION="539" -D_RTE_ -DTM4C123GH6PM -D_RTE_-o ./objects/main.o -MD)
 I (C:\Users\Mark\AppData\Local\Arm\Packs\ARM\CMSIS-FreeRTOS\10.5.1\Source\include\FreeRTOS.h)(0x66321894)
 I (C:\Keil_v5\ARM\ARMCLANG\include\stddef.h)(0x6569F662)
 I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6569F662)
@@ -37,9 +37,9 @@ I (C:\Users\Mark\AppData\Local\Arm\Packs\ARM\CMSIS\6.0.0\CMSIS\Core\Include\m-pr
 I (C:\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x6569F660)
 I (C:\Users\Mark\AppData\Local\Arm\Packs\ARM\CMSIS\6.0.0\CMSIS\Core\Include\m-profile\armv7m_mpu.h)(0x663AA825)
 I (C:\Users\Mark\AppData\Local\Arm\Packs\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123\system_TM4C123.h)(0x66321761)
-I (Drivers\project_config.h)(0x6642CE9A)
+I (Drivers\project_config.h)(0x664359E4)
 F (.\Drivers\button.h)(0x6642CCFB)()
-F (.\Drivers\Motor.c)(0x6642C2C3)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=none -mfloat-abi=soft -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -O1 -ffunction-sections -w-I./RTE/RTOS-I./RTE/_Target_1-IC:/Users/Mark/AppData/Local/Arm/Packs/ARM/CMSIS-FreeRTOS/10.5.1/CMSIS/RTOS2/FreeRTOS/Include-IC:/Users/Mark/AppData/Local/Arm/Packs/ARM/CMSIS-FreeRTOS/10.5.1/Source/include-IC:/Users/Mark/AppData/Local/Arm/Packs/ARM/CMSIS-FreeRTOS/10.5.1/Source/portable/GCC/ARM_CM3-IC:/Users/Mark/AppData/Local/Arm/Packs/ARM/CMSIS/6.0.0/CMSIS/Core/Include-IC:/Users/Mark/AppData/Local/Arm/Packs/Keil/TM4C_DFP/1.1.0/Device/Include/TM4C123-D__UVISION_VERSION="539" -D_RTE_ -DTM4C123GH6PM -D_RTE_-o ./objects/motor.o -MD)
+F (.\Drivers\Motor.c)(0x6643540E)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=none -mfloat-abi=soft -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -gdwarf-4 -O1 -ffunction-sections -w-I./RTE/RTOS-I./RTE/_Target_1-IC:/Users/Mark/AppData/Local/Arm/Packs/ARM/CMSIS-FreeRTOS/10.5.1/CMSIS/RTOS2/FreeRTOS/Include-IC:/Users/Mark/AppData/Local/Arm/Packs/ARM/CMSIS-FreeRTOS/10.5.1/Source/include-IC:/Users/Mark/AppData/Local/Arm/Packs/ARM/CMSIS-FreeRTOS/10.5.1/Source/portable/GCC/ARM_CM3-IC:/Users/Mark/AppData/Local/Arm/Packs/ARM/CMSIS/6.0.0/CMSIS/Core/Include-IC:/Users/Mark/AppData/Local/Arm/Packs/Keil/TM4C_DFP/1.1.0/Device/Include/TM4C123-D__UVISION_VERSION="539" -D_RTE_ -DTM4C123GH6PM -D_RTE_-o ./objects/motor.o -MD)
 I (C:\Users\Mark\AppData\Local\Arm\Packs\Keil\TM4C_DFP\1.1.0\Device\Include\TM4C123\TM4C123GH6PM.h)(0x66321761)
 I (C:\Users\Mark\AppData\Local\Arm\Packs\ARM\CMSIS\6.0.0\CMSIS\Core\Include\core_cm4.h)(0x663AA825)
 I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x6569F662)
