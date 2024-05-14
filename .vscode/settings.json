@@ -6,7 +6,8 @@
         "motor.h": "c",
         "queue.h": "c",
         "semphr.h": "c",
-        "freertos.h": "c"
+        "freertos.h": "c",
+        "project_config.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

@@ -2,8 +2,8 @@
 #include "task.h"
 #include "queue.h"
 #include "semphr.h"
-#include "Drivers/UART.h"
 #include "Drivers/button.h"
+#include "Drivers/UART.h"
 #include "Drivers/Motor.h"
 
 
@@ -24,18 +24,10 @@ void vPassengerTask(void* pvParameters);
 void vMotorAction(void* pvParameters);
 
 //===========================================================================================================================================
-void Delay_ms(int time_ms)
-{
-    int i, j;
-    for(i = 0 ; i < time_ms; i++)
-        for(j = 0; j < 3180; j++)
-            {}  /* excute NOP for 1ms */
-}
 
 
 int main( void )
 {
-	
 	INIT_BUTTONS();
 	uart_init();
 	motor_init();
@@ -59,17 +51,16 @@ int main( void )
 }
 
 
-int i = 0;
+
 // will be unblocked after jam interrupt
 void vJamTask(void* pvParameters){
 	for(;;){
 	xSemaphoreTake(xJamSemaphore,portMAX_DELAY);
-	vPrintStringAndNumber("jam task started  ", i);
+	vPrintString("jam task started");
 	vSendMotorCommandToBack(&xMotorCommandQueue,DOWN);
-	//Delay_ms(3000);
 	vTaskDelay(1000/portTICK_RATE_MS); // TODO Fix to be 500ms
 	vSendMotorCommandToBack(&xMotorCommandQueue,OFF);
-	i++;
+
 	}
 }
 
@@ -114,7 +105,7 @@ void vDriverTask(void* pvParameters){
 		uint8_t button_close_before =  READ_DRIVER_CLOSE_BUTTON();
 
 		//Delay_ms(100);
-		vTaskDelay(100/portTICK_RATE_MS); // sample and wait to see if the user is still holding the button
+		vTaskDelay(50/portTICK_RATE_MS); // sample and wait to see if the user is still holding the button
 
 		if(!READ_DRIVER_CLOSE_BUTTON() && button_close_before && !READ_LIMIT_SW1()) // if the driver has pressed the close button without holding.
 		{
@@ -155,8 +146,8 @@ void vDriverTask(void* pvParameters){
 			vPrintString("off");
 		}
 
-
 		xSemaphoreGive(xPassengerWindowMutex);
+		taskYIELD();
 		
 	}
 }
@@ -176,11 +167,12 @@ void vPassengerTask(void* pvParameters){
 
 		uint8_t button_open_before  =  READ_PASSENGER_OPEN_BUTTON();
 		uint8_t button_close_before =  READ_PASSENGER_CLOSE_BUTTON();
-		vTaskDelay(100/portTICK_RATE_MS);
+		vTaskDelay(50/portTICK_RATE_MS);
 		//vTaskDelay(50/portTICK_RATE_MS); // sample and wait to see if the user is still holding the button
 
 		if(!READ_PASSENGER_CLOSE_BUTTON() && button_close_before && !READ_LIMIT_SW1()) // if the passenger has pressed the close button without holding.
 		{
+			vPrintString("pass has pressed the close button");
 			vSendMotorCommandToBack(&xMotorCommandQueue,UP);
 			while (!READ_LIMIT_SW1());   // while the limit is not reached, wait.
 			vSendMotorCommandToBack(&xMotorCommandQueue,OFF);
@@ -188,6 +180,7 @@ void vPassengerTask(void* pvParameters){
 
 		else if (READ_PASSENGER_CLOSE_BUTTON() && button_close_before && !READ_LIMIT_SW1()) // if the passenger is holding the close button.
 		{
+			vPrintString("pass has hold the close button");
 			vSendMotorCommandToBack(&xMotorCommandQueue,UP);
 			while (READ_PASSENGER_CLOSE_BUTTON() && !READ_LIMIT_SW1()); // while the passenger is pressing the close button and the limit is not reached.
 			vSendMotorCommandToBack(&xMotorCommandQueue,OFF);
@@ -195,6 +188,7 @@ void vPassengerTask(void* pvParameters){
 
 		if(!READ_PASSENGER_OPEN_BUTTON() && button_open_before&& !READ_LIMIT_SW2()) // if the passenger has pressed the open button without holding.
 		{	
+			vPrintString("pass has pressed the open button");
 			vSendMotorCommandToBack(&xMotorCommandQueue,DOWN);
 			while (!READ_LIMIT_SW2()); // while the limit is not reached, wait.
 			vSendMotorCommandToBack(&xMotorCommandQueue,OFF);
@@ -202,12 +196,14 @@ void vPassengerTask(void* pvParameters){
 
 		else if (READ_PASSENGER_OPEN_BUTTON() && button_open_before&& !READ_LIMIT_SW2()) // if the passenger is holding the open button.
 		{
+			vPrintString("pass has hold the open button");
 			vSendMotorCommandToBack(&xMotorCommandQueue,DOWN);
 			while (READ_PASSENGER_OPEN_BUTTON() && !READ_LIMIT_SW2()); // while the passenger is pressing the open button and the limit is not reached.
 			vSendMotorCommandToBack(&xMotorCommandQueue,OFF);
 		}
 		
 		xSemaphoreGive(xPassengerWindowMutex);
+		taskYIELD();
 	}
 
 }

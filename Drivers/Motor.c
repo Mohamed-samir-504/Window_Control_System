@@ -8,9 +8,6 @@ void motor_up(void)
 	CLEAR_PIN(MOTOR_PORT,MOTOR_DOWN_PIN);
 	GPIOF->DATA |= (1<<2);
 	GPIOF->DATA &= ~(1<<3);
-
-    //MOTOR_PORT->DATA   |=  (1<<MOTOR_UP_PIN);
-	//MOTOR_PORT->DATA &= ~(1<<MOTOR_DOWN_PIN);
 }
 
 
@@ -29,11 +26,12 @@ void motor_down(void)
 	//MOTOR_PORT->DATA   &= ~(1<<MOTOR_UP_PIN);
 }
 
+
+
 /*
 @brief Send a command for the motor to stop.
 @note motor_init() must be called in main before using this API.
 */
-
 void motor_stop(void)
 {	
 	CLEAR_PIN(MOTOR_PORT,MOTOR_UP_PIN);
@@ -41,19 +39,10 @@ void motor_stop(void)
 
 	GPIOF->DATA &= ~(1<<2);
 	GPIOF->DATA &= ~(1<<3);
-
-    //MOTOR_PORT->DATA   &=~ (1<<MOTOR_UP_PIN);
-	//MOTOR_PORT->DATA &=~ (1<<MOTOR_DOWN_PIN);
 }
 
 void motor_init(void)
 {
-	
-
-	// if(MOTOR_UP_PIN > 7 || MOTOR_DOWN_PIN > 7) return;
-	
-	//set_up_output_pin(MOTOR_PORT,MOTOR_UP_PIN);
-	//set_up_output_pin(MOTOR_PORT,MOTOR_DOWN_PIN);
 	SYSCTL->RCGCGPIO |= 0x20;
 
 	if     (MOTOR_PORT == GPIOA) SYSCTL->RCGCGPIO |= 0x01; // Enable clock for PORTA

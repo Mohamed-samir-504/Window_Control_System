@@ -3,6 +3,8 @@
 *.map
 *.htm
 *.lnp
+*.dep
+*.axf
 RTE/_Target_1/RTE_Components.h
 Objects/project.lnp
 project.uvguix.Mark
@@ -10,7 +12,6 @@ project.uvguix.midot
 Objects/project.axf
 Objects/project.lnp
 .vscode/*
-Objects/project_Target 1.dep
 Objects/project.lnp
 EventRecorderStub.scvd
 .vscode/settings.json

@@ -1,0 +1,38 @@
+
+#ifndef __PROJECT_CONFIG_H__
+#define __PROJECT_CONFIG_H__
+
+#define MOTOR_PORT GPIOA
+#define MOTOR_UP_PIN     2
+#define MOTOR_DOWN_PIN   3
+
+
+#define PASSENGER_PORT GPIOD
+#define PASSENGER_OPEN_PIN 0
+#define PASSENGER_CLOSE_PIN 1
+
+
+#define DRIVER_PORT GPIOB
+#define DRIVER_OPEN_PIN 4
+#define DRIVER_CLOSE_PIN 5
+
+
+#define LIMIT_SWITCH_PORT GPIOE
+#define LIMIT_SWITCH1_PIN 2
+#define LIMIT_SWITCH2_PIN 3
+
+
+
+#define JAM_LOCK_PORT GPIOE
+#define JAM_BUTTON_PIN 5
+#define LOCK_BUTTON_PIN 4
+
+
+#define PULLUP_RESISTOR_EN 1
+#define PULLDOWN_RESISTOR_EN 0
+
+
+
+
+
+#endif

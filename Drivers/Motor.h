@@ -3,6 +3,11 @@
 #include "task.h"
 #include "queue.h"
 #include "semphr.h"
+#include "project_config.h"
+
+#ifndef __MOTOR_H_
+#define __MOTOR_H_
+
 typedef enum {UP, DOWN, OFF} MotorState;
 void motor_up(void);
 void motor_down(void);
@@ -10,9 +15,5 @@ void motor_stop(void);
 void motor_init(void);
 void vSendMotorCommandToBack(xQueueHandle* xMotorQueue, MotorState command);
 void vSendMotorCommandToFront(xQueueHandle* xMotorQueue, MotorState command);
-
-#define MOTOR_UP_PIN     6
-#define MOTOR_DOWN_PIN   7
-
-#define MOTOR_PORT GPIOD
-
+#endif
+ 
